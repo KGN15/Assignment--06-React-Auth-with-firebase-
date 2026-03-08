@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { auth } from "../service/firebase.service";
+import { auth } from "../service/firebase.service.js";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

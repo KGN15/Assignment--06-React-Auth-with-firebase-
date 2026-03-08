@@ -1,12 +1,12 @@
 import { useState } from "react";
 import '../style/auth.css'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword,  updateProfile } from "firebase/auth";
-import { auth, db } from "../service/firebase.service";
+import { auth, db } from "../service/firebase.service.js";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import SigninWithGoogle from "../components/signinWithGoogle";
-import SigninWithGithub from "../components/SigninWithGithub";
+import SigninWithGoogle from "../components/signinWithGoogle.jsx";
+import SigninWithGithub from "../components/SigninWithGithub.jsx";
 
 
 // Inline SVG icons to avoid FontAwesome dependency issues
