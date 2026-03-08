@@ -160,3 +160,10 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.ProfileLogo{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:20px;
+}

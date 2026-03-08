@@ -1,32 +1,18 @@
-import React, {  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { auth, db } from "../service/firebase.service";
-import { getDoc, doc } from "firebase/firestore";
+import { auth } from "../service/firebase.service";
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import '../style/profile.css'
 
+
 const Profile = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
-    const fetchUserData = async () => {
-        auth.onAuthStateChanged(async (user) => {
-            console.log(user);
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                setUserData(docSnap.data());
+    const [loading, setLoading] = useState(true);
 
-            }
-            else {
-                toast.error("User data not found. Please sign in again.", {
-                    position: "top-center"
-                })
-                navigate("/create")
-            }
 
-        })
-    }
 
     const handleLogout = async () => {
         try {
@@ -43,33 +29,55 @@ const Profile = () => {
         }
     }
 
-    useEffect(() => { fetchUserData() }, [])
+    useEffect(() => {
+
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setUserData(user);
+            setLoading(false);
+            console.log(user);
+            
+        });
+
+
+
+        return () => unsubscribe();
+
+    }, []);
+
+
+    if (loading) {
+        return (
+            <div className="premium-loader">
+                <div className="loader-content">
+                    <div className="spinner">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <h2>Loading...</h2>
+                </div>
+            </div>
+        );
+    }
+
 
 
     return (
         <div className="profile-root">
-            {userData ? (
+            {userData && (
                 <div className="profile-card">
 
+                    <div className="logo">
+                        <img src={userData?.photoURL || "https://i.pinimg.com/avif/736x/50/2f/b3/502fb3355fe33c2cd5b7aa358d05fb4b.avf"} className='ProfileLogo' alt="Profile" />
+                    </div>
+
                     <h2 className="profile-title">
-                        Welcome <span>{userData?.name || "User"}</span>
+                        Welcome <span>{userData.displayName}</span>
                     </h2>
 
                     <div className="profile-divider"></div>
 
                     <p className="profile-email">
-                        {userData?.email || "Not available"}
+                        {userData.email}
                     </p>
-
-                    <div className="profile-bio">
-                        <p>
-                            Coffee may not solve my problems, but it's worth a shot ☕
-                            <br />
-                            New bio. Who’s this?
-                            <br />
-                            I’m sorry for what I said when I was hungry 🍕
-                        </p>
-                    </div>
 
                     <div className="profile-actions">
                         <button className="profile-btn" onClick={handleLogout}>
@@ -78,18 +86,10 @@ const Profile = () => {
                     </div>
 
                 </div>
-            ) : (
-                <div className="premium-loader">
-                    <div className="loader-content">
-                        <div className="spinner">
-                            <div></div><div></div><div></div><div></div>
-                        </div>
-                        <h2>Loading...</h2>
-                    </div>
-                </div>
             )}
         </div>
-    );
+    )
+
 
 };
 

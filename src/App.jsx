@@ -16,13 +16,15 @@ const App = () => {
       setUser(user)
     })
   }, [])
+
+  
   return (
     <>
 
       <Routes>
         <Route path="/create" element={user ? <Navigate to="/profile" /> : <Authentication />} />
         <Route path="/" element={user ? <Navigate to="/profile" /> : <Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={user? <Profile /> : <Navigate to="/create" />} />
       </Routes>
         <Footer />
       <ToastContainer />
