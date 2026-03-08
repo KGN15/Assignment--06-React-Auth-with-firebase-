@@ -1,12 +1,12 @@
 import { Router, Routes, Route, Navigate } from "react-router-dom"
-import Authentication from "./pages/Authentication"
-import Home from "./pages/Home"
+import Authentication from "./pages/Authentication.jsx"
+import Home from "./pages/Home.jsx"
 import { ToastContainer } from 'react-toastify'
-import Profile from "./pages/Profile"
-import { auth } from "./service/firebase.service"
+import Profile from "./pages/Profile.jsx"
+import { auth } from "./service/firebase.service.js"
 import { useEffect, useState } from "react"
 import 'react-toastify/dist/ReactToastify.css';
-import Footer from "./components/Footer"
+import Footer from "./components/Footer.jsx"
 
 const App = () => {
   const [user, setUser] = useState(null);
