@@ -2,7 +2,7 @@ import { Router, Routes, Route, Navigate } from "react-router-dom"
 import Authentication from "./pages/Authentication"
 import Home from "./pages/Home"
 import { ToastContainer } from 'react-toastify'
-import Profile from "./pages/profile"
+import Profile from "./pages/Profile"
 import { auth } from "./service/firebase.service"
 import { useEffect, useState } from "react"
 import 'react-toastify/dist/ReactToastify.css';
