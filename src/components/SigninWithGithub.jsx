@@ -32,6 +32,9 @@ const SigninWithGithub = () => {
         }).catch((error) => {
             // Handle sign-in errors here
             console.error("Error signing in with GitHub:", error);
+            toast.error("Error signing in with GitHub. Please try again.", {
+                position: "top-center"
+            })
         });
 
     }
